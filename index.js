@@ -56,7 +56,7 @@ async function getPic() {
     }, 300000);
   }
   catch (err) {
-    sendErrorTelegram(JSON.stringify(err))
+    sendErrorTelegram(err)
   }
 }
 
