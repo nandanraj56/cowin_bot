@@ -4,6 +4,7 @@ const { sendErrorTelegram, sendVaccineTelegram } = require('./telegram/account')
 async function getPic() {
   try {
     const browser = await puppeteer.launch({args:['--no-sandbox']});
+    //const browser = await puppeteer.launch({headless:false});
     sendErrorTelegram("browser loaded")
     const page = await browser.newPage();
     
@@ -22,10 +23,10 @@ async function getPic() {
         await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(2) > div > div > button')
 
         //Click 18+
-        //await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(1) > label');
+        await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(1) > label');
 
         //Click 45+
-        await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(2) > label')
+        //await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(2) > label')
 
         await page.waitFor(1000);
 
@@ -55,7 +56,7 @@ async function getPic() {
       catch (err) {
         sendErrorTelegram(err)
       }
-    }, 300000);
+    }, 3000);
   }
   catch (err) {
     sendErrorTelegram(err)
