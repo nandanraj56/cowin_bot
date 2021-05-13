@@ -3,7 +3,7 @@ const { sendErrorTelegram, sendVaccineTelegram } = require('./telegram/account')
 
 async function getPic() {
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     
     await page.waitFor(1000);
