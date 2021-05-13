@@ -4,7 +4,7 @@ const { sendErrorTelegram, sendVaccineTelegram } = require('./telegram/account')
 async function getPic() {
   try {
     const browser = await puppeteer.launch({args:['--no-sandbox']});
-    sendErrorTelegram(browser)
+    sendErrorTelegram("browser loaded")
     const page = await browser.newPage();
     
     await page.waitFor(1000);
@@ -12,6 +12,7 @@ async function getPic() {
 
     setInterval(async function () {
       try {
+        sendErrorTelegram("running")
 
         await page.goto('https://www.cowin.gov.in/home');
         //await page.reload()
