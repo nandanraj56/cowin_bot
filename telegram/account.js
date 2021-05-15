@@ -1,8 +1,8 @@
 const axios = require("axios")
 
 let key = process.env.Telegram_API
-let channel = process.env.group
-let admin = process.env.me
+let channel = process.env.group //Used to send notifications
+let admin = process.env.me //Used to send error logs
 
 const sendVaccineTelegram = (count)=>{
    

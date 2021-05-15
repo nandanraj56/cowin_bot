@@ -1,26 +1,29 @@
 const puppeteer = require('puppeteer');
 const { sendErrorTelegram, sendVaccineTelegram } = require('./telegram/account')
+const notifier = require('node-notifier');
+
 
 async function getPic() {
   try {
-    const browser = await puppeteer.launch({args:['--no-sandbox']});
-    //const browser = await puppeteer.launch({headless:false});
-    sendErrorTelegram("browser loaded")
+    //const browser = await puppeteer.launch({args:['--no-sandbox']});
+    const browser = await puppeteer.launch({headless:false});
+    //sendErrorTelegram("browser loaded")
     const page = await browser.newPage();
+    await page.goto('https://www.cowin.gov.in/home');
+    await page.waitFor(3000);
     
-    await page.waitFor(1000);
-
-
+    
     setInterval(async function () {
       try {
-        sendErrorTelegram("running")
+        //sendErrorTelegram("running")
+        
 
-        await page.goto('https://www.cowin.gov.in/home');
         //await page.reload()
-        await page.type('#mat-input-0', "845438")
-
+        await page.type('#mat-input-0', "845438") //805126
+       // await page.type('#mat-input-0', "805126")
         //Search
         await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(2) > div > div > button')
+        await page.waitFor(1000);
 
         //Click 18+
         await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(1) > label');
@@ -28,7 +31,7 @@ async function getPic() {
         //Click 45+
         //await page.click('body > app-root > div > app-home > div.maplocationblock.bs-section > div > appointment-table > div > div > div > div > div > div > div > div > div > div > div:nth-child(2) > form > div > div > div:nth-child(4) > div > div:nth-child(2) > label')
 
-        await page.waitFor(1000);
+        await page.waitFor(500);
 
         //Evaluate
         const x = async () => {
@@ -50,13 +53,14 @@ async function getPic() {
         };
         let count = await x()
         if (count > 0) {
+          notifier.notify('Vaccine available '+ count);
           sendVaccineTelegram(count);
         }
       }
       catch (err) {
         sendErrorTelegram(err)
       }
-    }, 300000);
+    }, 60000);
   }
   catch (err) {
     sendErrorTelegram(err)
